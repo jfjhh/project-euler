@@ -1,0 +1,180 @@
+\documentclass[final,letterpaper]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{dsfont}
+\usepackage{nicefrac}
+\usepackage{mathtools}
+
+
+\title{Closed form of the difference between the square of the sum and the sum
+of the squares of natural numbers}
+\author{Alex Striff}
+\date\today
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+
+The goal is to find a closed form of the following expression, the difference
+between the square of the sum of natural numbers to $n$ and the sum of the
+squares of the natural numbers to $n$.
+
+\[
+	{\left(\sum_{i=1}^{n}{i}\right)}^2 - \sum_{i=1}^{n}{i^2}
+\]
+
+\section{Triangle Numbers}
+
+The easiest subproblem here is to find the sum of the first $n$ natural numbers:
+
+\[
+	T_n = \sum_{i=1}^{n}{i}
+\]
+
+The sum of $n$ numbers can be organized into $\nicefrac{n}{2}$ pairs of numbers,
+pairing the first with the last, the second with the penultimate, and so on. The
+sum of a pair will always be $n + 1$, so adding all $\nicefrac{n}{2}$ pairs of
+$n + 1$ gives $\nicefrac{n (n + 1)}{2}$.
+
+\begin{align*}
+	T_n &= 1 + 2 + 3 + \cdots + (n - 2) + (n - 1) + n \\
+	&= (1 + n) + (2 + (n - 1)) + (3 + (n - 2)) + \cdots
+	+ (\frac{n}{2} + (n - \frac{n}{2})) \\
+	&= \frac{n (n + 1)}{2}
+\end{align*}
+
+A geometric approach would be to plot $n$ rectangles in order with heights
+ranging from $1$ to $n$ and constant widths of $1$. The area of these rectangles
+is the $n$th triangle number. Drawing a line from $(0, 0)$ to $(n, n)$ would
+make a right triangle with side length $n$ on the bottom and $n$ smaller right
+triangles of side length $1$ on the top. The area of the larger triangle is
+$\nicefrac{n^2}{2}$, and of any smaller triangle, $\nicefrac{1^2}{2}$. Because
+there are $n$ smaller triangles, the area of all of the smaller triangles is
+$\nicefrac{n}{2}$. Adding together the two areas, the above $\nicefrac{n (n +
+1)}{2}$ is obtained.
+
+\begin{align*}
+	T_n &= \frac{1}{2}(n)(n) + n \cdot \frac{1}{2}(1)(1) \\
+	&= \frac{n^2}{2} + \frac{n}{2} \\
+	&= \frac{n (n + 1)}{2}
+\end{align*}
+
+To find the $n$th square of the sum term, square $T_n$. The expression can now
+be simplified to:
+
+\[
+	{\left(\frac{n (n + 1)}{2}\right)}^2 - \sum_{i=1}^{n}{i^2}
+\]
+
+\section{Square Numbers}
+
+The sum of the squares term is a bit more difficult. Upon writing down the first
+few squares, a pattern emerges.
+
+\begin{alignat*}{2}
+	1^2  &= 1   &&= 1 \\
+	2^2  &= 4   &&= 1 + 3 \\
+	3^2  &= 9   &&= 1 + 3 + 5 \\
+	4^2  &= 16  &&= 1 + 3 + 5 + 7 \\
+	5^2  &= 25  &&= 1 + 3 + 5 + 7 + 9 \\
+	6^2  &= 36  &&= 1 + 3 + 5 + 7 + 9 + 11 \\
+	7^2  &= 49  &&= 1 + 3 + 5 + 7 + 9 + 11 + 13 \\
+	8^2  &= 64  &&= 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 \\
+	9^2  &= 81  &&= 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 + 17 \\
+	10^2 &= 100 &&= 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 + 17 + 19 \\
+	n^2  &= n^2 &&= \sum_{i=1}^{n}{2i - 1}
+\end{alignat*}
+
+So the $n$th square appears to be the sum of the first $n$ odd numbers. To use
+this relationship later, it must be proved that this is true for all $n
+\in \mathds{N}$.
+
+\begin{proof}
+	\begin{align*}
+		\vdash 1^2
+		&= 1 \\
+		\vdash n^2
+		&= \sum_{i=1}^{n}{2i - 1} \\
+		&= \left(\sum_{i=1}^{n - 1}{2i - 1}\right) + (2i - 1) \\
+		&= {(n - 1)}^2 + (2n - 1) \\
+		{(n + 1)}^2
+		&= {((n + 1) - 1)}^2 + (2 (n + 1) - 1) \\
+		&= n^2 + 2n + 1 \\
+		&= {(n + 1)}^2
+	\end{align*}
+	Therefore $n^2 = \sum_{i=1}^{n}{2i - 1}$ is true for all $\mathds{N}$ by
+	induction.
+\end{proof}
+
+\section{Odd Numbers}
+
+The task is now to sum squares by summing odd numbers. Expanding the sum:
+
+\begin{align*}
+	\sum_{i=1}^{n}{i^2}
+	&= \sum_{i=1}^{n}{\sum_{k=1}^{i}{2k - 1}} \\
+	&=\,1 \\
+	&+\;1 + 3 \\
+	&+\;1 + 3 + 5 \\
+	&+\;1 + 3 + 5 + \cdots + (2n - 5) \\
+	&+\;1 + 3 + 5 + \cdots + (2n - 5) + (2n - 3) \\
+	&+\;1 + 3 + 5 + \cdots + (2n - 5) + (2n - 3) + (2n - 1) \\
+	&= (n)(1) + (n - 1)(3) + (n - 2)(5) \\
+	&+ \cdots + (3)(2n - 5) + (2)(2n - 3) + (1)(2n - 1) \\
+	&= \sum_{i=1}^{n}{(n - i + 1)(2i - 1)}
+\end{align*}
+
+Any odd number $O_n = 2n - 1$ can be written as $O_n = 2n - 1 + (1 - 1)
+= 2(n - 1) + 1$, i.e.\ the sum of $1$ and $(n - 1)$ $2$'s.
+
+\begin{align*}
+	\sum_{i=1}^{n}{i^2}
+	&= (n)(1) \\
+	&+ (n - 1)(1 + 2) \\
+	&+ (n - 2)(1 + 2 + 2) \\
+	&+ (n - 3)(1 + 2 + 2 + 2) \\
+	&+ \cdots \\
+	&= n \\
+	&+ (n - 1) + (n - 1)(2) \\
+	&+ (n - 2) + (n - 2)(2 + 2) \\
+	&+ (n - 3) + (n - 3)(2 + 2 + 2) \\
+	&+ \cdots \\
+	&= T_n \\
+	&+ 2(n - 1)(1) \\
+	&+ 2(n - 2)(1 + 1) \\
+	&+ 2(n - 3)(1 + 1 + 1) \\
+	&+ \cdots \\
+	&= T_n + 2\sum_{i=1}^{n}{(n-i)i} \\
+	&= T_n + 2\sum_{i=1}^{n}{(ni - i^2)} \\
+	&= T_n + 2n\left(\sum_{i=1}^{n}{i}\right) -
+	2\left(\sum_{i=1}^{n}{i^2}\right) \\
+	3\sum_{i=1}^{n}{i^2} &= T_n(2n + 1)\\
+	\sum_{i=1}^{n}{i^2} &= T_n\left(\frac{2n + 1}{3}\right)
+\end{align*}
+
+So a closed form for the sum of the squares is now known.
+
+\clearpage
+\section{Conclusion}
+
+Now the closed form for the square of the sum minus the sum of the squares of
+the first $n$ natural numbers may be written.
+
+\begin{align*}
+	{\left(\sum_{i=1}^{n}{i}\right)}^2 - \sum_{i=1}^{n}{i^2}
+	&= {T_n}^2 - T_n\left(\frac{2n + 1}{3}\right) \\
+	&= T_n\left(\frac{n(n+1)}{2} - \frac{2n + 1}{3}\right) \\
+	&= \frac{T_n}{6}(3n^2 - n - 2) \\
+	&= \frac{n^2 + 2n + 1}{12}(3n^2 - n - 2) \\
+	\\
+	\Aboxed{%
+		{\left(\sum_{i=1}^{n}{i}\right)}^2 - \sum_{i=1}^{n}{i^2}
+		&= \frac{n^4}{4} + \frac{n^3}{6} - \frac{n^2}{4} - \frac{n}{6}
+	}
+\end{align*}
+
+\end{document}
+
