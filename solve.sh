@@ -14,7 +14,7 @@ SOL_FILE="p.lisp"
 SOL_OUT="solution.txt"
 
 cd $DIR
-for d in [0-9]*; do
+for d in `ls | grep '[0-9]*' | sort -n`; do
 	if [[ -d "$d" ]]; then
 		cd $d
 		printf "\033[0;1mSolving Problem %s ... \033[0;32m" \
